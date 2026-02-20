@@ -1,0 +1,161 @@
+[
+  {
+    "type": "function",
+    "function": {
+      "name": "translate_text",
+      "description": "Translate text with cultural adaptation using Nativ. Applies the user's translation memory, glossaries, brand voice, and style guides automatically. Supports formality control, context-aware translation, backtranslation for quality review, and character limits for UI elements.",
+      "strict": true,
+      "parameters": {
+        "type": "object",
+        "required": ["text", "language"],
+        "properties": {
+          "text": {
+            "type": "string",
+            "description": "The text to translate."
+          },
+          "language": {
+            "type": "string",
+            "description": "Target language name (e.g. \"French\", \"Japanese\", \"Brazilian Portuguese\")."
+          },
+          "language_code": {
+            "type": ["string", "null"],
+            "description": "ISO language code (e.g. \"fr\", \"ja\", \"pt-BR\"). Auto-detected from language name if not provided."
+          },
+          "source_language": {
+            "type": ["string", "null"],
+            "description": "Source language name. Defaults to English."
+          },
+          "source_language_code": {
+            "type": ["string", "null"],
+            "description": "Source language code. Defaults to en."
+          },
+          "context": {
+            "type": ["string", "null"],
+            "description": "Context to improve translation quality (e.g. \"luxury fashion headline for billboard\" or \"mobile app button\")."
+          },
+          "formality": {
+            "type": ["string", "null"],
+            "enum": ["very_informal", "informal", "neutral", "formal", "very_formal", null],
+            "description": "Formality level. If omitted, uses the user's default from their Nativ language settings."
+          },
+          "glossary": {
+            "type": ["string", "null"],
+            "description": "Inline glossary for priority term matching. One term per line as \"source=target\" or CSV format."
+          },
+          "include_tm_info": {
+            "type": ["boolean", "null"],
+            "description": "Return translation memory match score, source reference, and top matches alongside the translation."
+          },
+          "backtranslate": {
+            "type": ["boolean", "null"],
+            "description": "Generate a backtranslation to source language for quality review."
+          },
+          "include_rationale": {
+            "type": ["boolean", "null"],
+            "description": "Generate an AI rationale explaining translation decisions."
+          },
+          "max_characters": {
+            "type": ["integer", "null"],
+            "description": "Strict character limit for the translation. Useful for UI elements with fixed space constraints."
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  {
+    "type": "function",
+    "function": {
+      "name": "extract_text_from_image",
+      "description": "Extract all visible text from an image using AI-powered OCR. Accepts a base64-encoded image (JPEG, PNG, or WebP). Returns the extracted text.",
+      "strict": true,
+      "parameters": {
+        "type": "object",
+        "required": ["image_base64", "filename"],
+        "properties": {
+          "image_base64": {
+            "type": "string",
+            "description": "Base64-encoded image data (no data URI prefix, just the raw base64 string)."
+          },
+          "filename": {
+            "type": "string",
+            "description": "Original filename with extension (e.g. \"banner.png\"). Used to determine content type."
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  {
+    "type": "function",
+    "function": {
+      "name": "generate_styled_text_image",
+      "description": "Generate a new image with text rendered in the same visual style as a reference image. Upload a reference image and provide text to render. Perfect for localizing marketing visuals, banners, and social media graphics.",
+      "strict": true,
+      "parameters": {
+        "type": "object",
+        "required": ["image_base64", "filename", "text", "language_code"],
+        "properties": {
+          "image_base64": {
+            "type": "string",
+            "description": "Base64-encoded reference image showing desired text style."
+          },
+          "filename": {
+            "type": "string",
+            "description": "Original filename with extension (e.g. \"reference.png\")."
+          },
+          "text": {
+            "type": "string",
+            "description": "The text to render in the reference style. Max 200 characters."
+          },
+          "language_code": {
+            "type": "string",
+            "description": "Language code of the text being rendered (e.g. \"fr\", \"ja\")."
+          },
+          "output_format": {
+            "type": ["string", "null"],
+            "enum": ["png", "jpeg", "webp", null],
+            "description": "Output image format. Defaults to png."
+          },
+          "model": {
+            "type": ["string", "null"],
+            "enum": ["gpt", "gemini", null],
+            "description": "AI model for image generation. Defaults to gpt."
+          },
+          "num_images": {
+            "type": ["integer", "null"],
+            "description": "Number of image variants to generate (1 to 5). Defaults to 1."
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  {
+    "type": "function",
+    "function": {
+      "name": "inspect_cultural_sensitivity",
+      "description": "Analyze an image for potential cultural sensitivity issues across specified countries (or top 30 countries by GDP if none specified). Returns a SAFE or NOT SAFE verdict with per-country details and fix suggestions.",
+      "strict": true,
+      "parameters": {
+        "type": "object",
+        "required": ["image_base64", "filename"],
+        "properties": {
+          "image_base64": {
+            "type": "string",
+            "description": "Base64-encoded image to analyze."
+          },
+          "filename": {
+            "type": "string",
+            "description": "Original filename with extension (e.g. \"ad_creative.jpg\")."
+          },
+          "countries": {
+            "type": ["string", "null"],
+            "description": "Comma-separated list of country names to check against. Defaults to top 30 countries by GDP."
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  }
+]

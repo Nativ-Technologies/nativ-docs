@@ -1,0 +1,343 @@
+openapi: 3.1.0
+info:
+  title: Nativ Localization API
+  description: AI-powered localization with translation memory, glossary, and brand voice.
+  version: 1.0.0
+  contact:
+    name: Nativ
+    url: https://usenativ.com
+    email: hello@usenativ.com
+
+servers:
+  - url: https://api.usenativ.com
+    description: Production
+
+components:
+  schemas: {}
+  securitySchemes:
+    OAuth2:
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: https://api.usenativ.com/oauth/authorize
+          tokenUrl: https://api.usenativ.com/oauth/token
+          scopes:
+            translate: Translate text and generate images
+
+security:
+  - OAuth2:
+      - translate
+
+paths:
+  /text/culturalize:
+    post:
+      operationId: translateText
+      x-openai-isConsequential: false
+      summary: Translate text with cultural adaptation
+      description: >-
+        Translate text with translation memory, glossaries, brand voice, and
+        style guides. Supports formality control and backtranslation.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - text
+                - language
+              properties:
+                text:
+                  type: string
+                  description: The text to translate.
+                language:
+                  type: string
+                  description: >-
+                    Target language name (e.g. "French", "Japanese",
+                    "Brazilian Portuguese").
+                language_code:
+                  type: string
+                  description: >-
+                    ISO language code (e.g. "fr", "ja", "pt-BR").
+                    Auto-detected from language name if not provided.
+                source_language:
+                  type: string
+                  description: Source language name. Defaults to English.
+                source_language_code:
+                  type: string
+                  description: Source language code. Defaults to en.
+                context:
+                  type: string
+                  description: >-
+                    Context to improve translation quality. E.g. "luxury
+                    fashion headline for billboard" or "mobile app button".
+                formality:
+                  type: string
+                  enum:
+                    - very_informal
+                    - informal
+                    - neutral
+                    - formal
+                    - very_formal
+                  description: >-
+                    Formality level. If omitted, uses the user's default
+                    from their Nativ language settings.
+                glossary:
+                  type: string
+                  description: >-
+                    Inline glossary for priority term matching. One term per
+                    line as "source=target" or CSV format.
+                include_tm_info:
+                  type: boolean
+                  description: >-
+                    Return translation memory match score, source reference,
+                    and top matches alongside the translation.
+                backtranslate:
+                  type: boolean
+                  description: >-
+                    Generate a backtranslation to source language for quality
+                    review. Requires include_tm_info to be true.
+                include_rationale:
+                  type: boolean
+                  description: >-
+                    Generate an AI rationale explaining translation decisions.
+                    Requires backtranslate to be true.
+                max_characters:
+                  type: integer
+                  description: >-
+                    Strict character limit for the translation. Useful for
+                    UI elements with fixed space constraints.
+                tool:
+                  type: string
+                  description: Must be set to "api" for Custom GPT usage.
+      responses:
+        "200":
+          description: Successful translation.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  translated_text:
+                    type: string
+                    description: The translated text.
+                  metadata:
+                    type: object
+                    properties:
+                      word_count:
+                        type: integer
+                        description: Word count of translated text.
+                      cost:
+                        type: integer
+                        description: Cost in credits.
+                  tm_match:
+                    type: object
+                    description: Translation memory match info when include_tm_info is true.
+                    properties:
+                      score:
+                        type: number
+                        description: Match score 0 to 100 percent.
+                      match_type:
+                        type: string
+                        description: exact, strong, or partial.
+                      source_text:
+                        type: string
+                        description: Matched source text from TM.
+                      target_text:
+                        type: string
+                        description: Matched target text from TM.
+                      tm_source:
+                        type: string
+                        description: Source type such as phrase_tm, user_glossary, or brand_voice.
+                      tm_source_name:
+                        type: string
+                        description: Name of the TM source.
+                  rationale:
+                    type: string
+                    description: AI explanation of translation decisions.
+                  backtranslation:
+                    type: string
+                    description: Translation back to source language for review.
+        "401":
+          description: Invalid or missing credentials.
+        "402":
+          description: Insufficient credits.
+        "500":
+          description: Translation failed.
+
+  /text/extract:
+    post:
+      operationId: extractTextFromImage
+      x-openai-isConsequential: false
+      summary: Extract text from an image using OCR
+      description: >-
+        Extract all visible text from an uploaded image using AI-powered OCR.
+        Supports JPEG, PNG, and WebP images.
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required:
+                - file
+              properties:
+                file:
+                  type: string
+                  format: binary
+                  description: Image file (JPEG, PNG, or WebP).
+      responses:
+        "200":
+          description: Text successfully extracted.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  extracted_text:
+                    type: string
+                    description: All text found in the image.
+        "401":
+          description: Invalid or missing credentials.
+        "415":
+          description: Unsupported image format.
+
+  /image/culturalize:
+    post:
+      operationId: generateStyledTextImage
+      x-openai-isConsequential: false
+      summary: Generate styled text image from a reference
+      description: >-
+        Upload a reference image and provide text. Generates a new image with
+        the text rendered in the same visual style as the reference. Perfect
+        for localizing marketing visuals, banners, and social media graphics.
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required:
+                - file
+                - text
+                - language_code
+              properties:
+                file:
+                  type: string
+                  format: binary
+                  description: Reference image showing desired text style (JPEG, PNG, or WebP).
+                text:
+                  type: string
+                  description: The text to render in the reference style. Max 200 characters.
+                language_code:
+                  type: string
+                  description: Language code of the text being rendered (e.g. fr, ja).
+                output_format:
+                  type: string
+                  enum:
+                    - png
+                    - jpeg
+                    - webp
+                  description: Output image format. Defaults to png.
+                model:
+                  type: string
+                  enum:
+                    - gpt
+                    - gemini
+                  description: AI model for image generation. Defaults to gpt.
+                num_images:
+                  type: integer
+                  description: Number of image variants to generate (1 to 5). Defaults to 1.
+                tool:
+                  type: string
+                  description: Must be set to "api" for Custom GPT usage.
+      responses:
+        "200":
+          description: Image generated successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  images:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        image_base64:
+                          type: string
+                          description: Base64-encoded generated image.
+                  metadata:
+                    type: object
+                    properties:
+                      cost:
+                        type: integer
+                        description: Total cost in credits.
+                      num_images:
+                        type: integer
+                        description: Number of images generated.
+        "401":
+          description: Invalid or missing credentials.
+        "402":
+          description: Insufficient credits.
+        "415":
+          description: Unsupported image format.
+
+  /image/inspect:
+    post:
+      operationId: inspectCulturalSensitivity
+      x-openai-isConsequential: false
+      summary: Check image for cultural sensitivity issues
+      description: >-
+        Analyze an image for potential cultural sensitivity issues across
+        specified countries or top 30 countries by GDP if none specified.
+        Returns a SAFE or NOT SAFE verdict with per-country details.
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required:
+                - file
+              properties:
+                file:
+                  type: string
+                  format: binary
+                  description: Image to analyze (JPEG, PNG, or WebP).
+                countries:
+                  type: string
+                  description: >-
+                    Comma-separated list of country names to check against.
+                    Defaults to top 30 countries by GDP if not specified.
+      responses:
+        "200":
+          description: Analysis complete.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  verdict:
+                    type: string
+                    description: Overall cultural safety verdict, either SAFE or NOT SAFE.
+                  affected_countries:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        country:
+                          type: string
+                          description: Country where the issue applies.
+                        issue:
+                          type: string
+                          description: What the cultural sensitivity issue is.
+                        suggestion:
+                          type: string
+                          description: Actionable fix recommendation.
+        "401":
+          description: Invalid or missing credentials.
+        "402":
+          description: Insufficient credits.
+        "415":
+          description: Unsupported image format.

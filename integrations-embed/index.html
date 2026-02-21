@@ -260,6 +260,15 @@
 
   .card-link:hover svg { transform: translateX(2px); }
 
+  .card-link.install-cta {
+    color: var(--accent);
+    font-weight: 600;
+  }
+
+  .card-link.install-cta:hover {
+    color: #6ee7a0;
+  }
+
   /* ── Divider ── */
   .divider {
     border: none;
@@ -547,6 +556,147 @@
         </div>
       </div>
 
+      <!-- Vercel AI SDK -->
+      <div class="card">
+        <div class="card-top">
+          <div class="card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polygon points="12 2 22 20 2 20"/>
+            </svg>
+          </div>
+          <h3>Vercel AI SDK</h3>
+          <span class="badge">AI SDK</span>
+        </div>
+        <p class="desc">
+          Nativ tools for the Vercel AI&nbsp;SDK. Give any AI agent
+          (GPT&#8209;4o, Claude, Gemini, etc.) the ability to translate
+          and manage localization&nbsp;&mdash; works with Next.js, Node,
+          and&nbsp;any AI&nbsp;SDK&nbsp;provider.
+        </p>
+        <div class="install-cmd" onclick="copyCmd(this,'npm install nativ-vercel-ai')">
+          <span class="prompt">$</span> npm install nativ-vercel-ai
+          <button class="copy-btn" aria-label="Copy"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button>
+          <span class="tooltip">Copied!</span>
+        </div>
+        <div class="card-links">
+          <a class="card-link" href="https://www.npmjs.com/package/nativ-vercel-ai" target="_blank" rel="noopener">
+            npm <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          </a>
+          <a class="card-link" href="https://github.com/Nativ-Technologies/nativ-vercel-ai" target="_blank" rel="noopener">
+            GitHub <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <!-- REST API Docs -->
+      <div class="card">
+        <div class="card-top">
+          <div class="card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+              <polyline points="14 2 14 8 20 8"/>
+              <line x1="16" y1="13" x2="8" y2="13"/>
+              <line x1="16" y1="17" x2="8" y2="17"/>
+            </svg>
+          </div>
+          <h3>REST API Docs</h3>
+          <span class="badge">API</span>
+        </div>
+        <p class="desc">
+          Interactive API reference powered by Redoc. Browse every endpoint,
+          see request/response schemas, and explore the full Nativ&nbsp;API.
+        </p>
+        <div class="card-links">
+          <a class="card-link" href="https://api.usenativ.com/redoc" target="_blank" rel="noopener">
+            API Reference <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <!-- Postman Collection -->
+      <div class="card">
+        <div class="card-top">
+          <div class="card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 12a9 9 0 1 1-6.219-8.56"/>
+              <polyline points="22 2 12 12"/>
+              <path d="M15 3h6v6"/>
+            </svg>
+          </div>
+          <h3>Postman Collection</h3>
+          <span class="badge">API</span>
+        </div>
+        <p class="desc">
+          29 pre&#8209;built requests across 9&nbsp;folders. Import, set your
+          API&nbsp;key, and start calling the Nativ&nbsp;API in&nbsp;seconds.
+        </p>
+        <div class="card-links">
+          <a class="card-link install-cta" href="https://github.com/Nativ-Technologies/nativ-docs/tree/main/postman" target="_blank" rel="noopener">
+            Download <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          </a>
+          <a class="card-link" href="https://api.usenativ.com/redoc" target="_blank" rel="noopener">
+            API Docs <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <!-- CLI Tool -->
+      <div class="card">
+        <div class="card-top">
+          <div class="card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/>
+            </svg>
+          </div>
+          <h3>CLI Tool</h3>
+          <span class="badge">Terminal</span>
+        </div>
+        <p class="desc">
+          Translate text, manage TM, and inspect images straight from your
+          terminal. Pipe&nbsp;friendly for shell scripts and CI&nbsp;pipelines.
+          Included with the Python&nbsp;SDK.
+        </p>
+        <div class="install-cmd" onclick="copyCmd(this,'pip install nativ')">
+          <span class="prompt">$</span> pip install nativ
+          <button class="copy-btn" aria-label="Copy"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button>
+          <span class="tooltip">Copied!</span>
+        </div>
+        <div class="card-links">
+          <a class="card-link" href="https://pypi.org/project/nativ/" target="_blank" rel="noopener">
+            PyPI <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          </a>
+          <a class="card-link" href="https://github.com/Nativ-Technologies/nativ-python" target="_blank" rel="noopener">
+            GitHub <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <!-- Slack Bot -->
+      <div class="card">
+        <div class="card-top">
+          <div class="card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+            </svg>
+          </div>
+          <h3>Slack Bot</h3>
+          <span class="badge">Slack</span>
+        </div>
+        <p class="desc">
+          <code>/nativ translate "Hello" &#8209;&#8209;to French</code> in any channel.
+          Supports batch translation, TM&nbsp;search, and language&nbsp;listing
+          with rich Block&nbsp;Kit&nbsp;responses.
+        </p>
+        <div class="card-links">
+          <a class="card-link install-cta" href="https://nativ-slack-bot-620094978700.us-central1.run.app/slack/install" target="_blank" rel="noopener">
+            Add to Slack <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          </a>
+          <a class="card-link" href="https://github.com/Nativ-Technologies/nativ-slack-bot" target="_blank" rel="noopener">
+            GitHub <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          </a>
+        </div>
+      </div>
+
     </div>
   </section>
 
@@ -663,6 +813,84 @@
     </div>
   </section>
 
+  <!-- ── TMS & Localization Platforms ── -->
+  <section class="category">
+    <div class="category-header">
+      <span class="chevron">&#x27E9;</span>
+      <h2>TMS &amp; Localization Platforms</h2>
+    </div>
+    <p>Connect Nativ to your existing translation management and content systems.</p>
+
+    <div class="grid">
+
+      <!-- XTM Cloud -->
+      <div class="card">
+        <div class="card-top">
+          <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></div>
+          <h3>XTM Cloud</h3>
+          <span class="badge">MT Connector</span>
+        </div>
+        <p class="desc">Nativ as a machine translation engine inside XTM&nbsp;Cloud. Leverage brand&nbsp;voice and TM directly in your CAT&nbsp;workflows.</p>
+        <div class="card-links">
+          <a class="card-link" href="https://usenativ.com" target="_blank" rel="noopener">Learn more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a>
+        </div>
+      </div>
+
+      <!-- Phrase (Memsource) -->
+      <div class="card">
+        <div class="card-top">
+          <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></div>
+          <h3>Phrase (Memsource)</h3>
+          <span class="badge">TMS</span>
+        </div>
+        <p class="desc">Bi&#8209;directional sync between Phrase&nbsp;TMS and Nativ translation&nbsp;memory. Use Nativ brand&nbsp;voice within your Phrase&nbsp;workflows.</p>
+        <div class="card-links">
+          <a class="card-link" href="https://usenativ.com" target="_blank" rel="noopener">Learn more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a>
+        </div>
+      </div>
+
+      <!-- Smartsheet -->
+      <div class="card">
+        <div class="card-top">
+          <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="3" y1="15" x2="21" y2="15"/><line x1="9" y1="3" x2="9" y2="21"/></svg></div>
+          <h3>Smartsheet</h3>
+          <span class="badge">Productivity</span>
+        </div>
+        <p class="desc">Translate Smartsheet rows and columns in&nbsp;place. Automate localization of project plans, content calendars, and copy&nbsp;decks.</p>
+        <div class="card-links">
+          <a class="card-link" href="https://usenativ.com" target="_blank" rel="noopener">Learn more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a>
+        </div>
+      </div>
+
+      <!-- Iconik (DAM) -->
+      <div class="card">
+        <div class="card-top">
+          <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg></div>
+          <h3>Iconik (DAM)</h3>
+          <span class="badge">DAM</span>
+        </div>
+        <p class="desc">Localize media metadata and captions stored in Iconik. Bridge your digital asset management with Nativ culturalization.</p>
+        <div class="card-links">
+          <a class="card-link" href="https://usenativ.com" target="_blank" rel="noopener">Learn more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a>
+        </div>
+      </div>
+
+      <!-- GitHub App -->
+      <div class="card">
+        <div class="card-top">
+          <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg></div>
+          <h3>GitHub App</h3>
+          <span class="badge">CI/CD</span>
+        </div>
+        <p class="desc">Auto&#8209;localize i18n files on every push or&nbsp;PR. The GitHub App detects translation keys and opens PRs with localized&nbsp;content.</p>
+        <div class="card-links">
+          <a class="card-link" href="https://usenativ.com" target="_blank" rel="noopener">Learn more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
   <!-- ═══════════════════════════════════════════════
        COMING SOON  —  greyed-out cards by category
        ═══════════════════════════════════════════════ -->
@@ -678,81 +906,6 @@
 
     <div class="grid">
 
-      <div class="card soon">
-        <div class="card-top">
-          <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div>
-          <h3>Vercel AI SDK</h3>
-          <span class="badge">Coming Soon</span>
-        </div>
-        <p class="desc">Tool provider for the Vercel AI SDK. Use Nativ inside any Next.js or Edge function AI flow.</p>
-      </div>
-
-      <div class="card soon">
-        <div class="card-top">
-          <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
-          <h3>AutoGen</h3>
-          <span class="badge">Coming Soon</span>
-        </div>
-        <p class="desc">Microsoft AutoGen function for multi-agent localization conversations.</p>
-      </div>
-
-      <div class="card soon">
-        <div class="card-top">
-          <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div>
-          <h3>LlamaIndex</h3>
-          <span class="badge">Coming Soon</span>
-        </div>
-        <p class="desc">LlamaIndex tool spec for retrieval-augmented localization workflows.</p>
-      </div>
-
-      <div class="card soon">
-        <div class="card-top">
-          <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m4.93 4.93 14.14 14.14"/></svg></div>
-          <h3>Haystack</h3>
-          <span class="badge">Coming Soon</span>
-        </div>
-        <p class="desc">Haystack component for adding localization to your NLP pipelines.</p>
-      </div>
-
-      <div class="card soon">
-        <div class="card-top">
-          <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 3h-8l-2 4h12l-2-4z"/></svg></div>
-          <h3>Semantic Kernel</h3>
-          <span class="badge">Coming Soon</span>
-        </div>
-        <p class="desc">Microsoft Semantic Kernel plugin for .NET and C# AI applications.</p>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- ── Developer Tools (coming soon) ── -->
-  <section class="category">
-    <div class="category-header">
-      <span class="chevron">&#x27E9;</span>
-      <h2>Developer Tools</h2>
-    </div>
-    <p>Localize from your terminal, CI pipeline, or docs.</p>
-
-    <div class="grid">
-
-      <div class="card soon">
-        <div class="card-top">
-          <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg></div>
-          <h3>CLI Tool</h3>
-          <span class="badge">Coming Soon</span>
-        </div>
-        <p class="desc">Translate files, manage TM, and configure brand voice straight from the terminal.</p>
-      </div>
-
-      <div class="card soon">
-        <div class="card-top">
-          <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
-          <h3>REST API Docs</h3>
-          <span class="badge">Coming Soon</span>
-        </div>
-        <p class="desc">Interactive API reference with try-it-out console and code samples in every language.</p>
-      </div>
 
       <div class="card soon">
         <div class="card-top">
@@ -940,15 +1093,6 @@
       <div class="card soon">
         <div class="card-top">
           <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></div>
-          <h3>Phrase (Memsource)</h3>
-          <span class="badge">Coming Soon</span>
-        </div>
-        <p class="desc">Bi-directional sync between Phrase TMS and Nativ translation memory.</p>
-      </div>
-
-      <div class="card soon">
-        <div class="card-top">
-          <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></div>
           <h3>Crowdin</h3>
           <span class="badge">Coming Soon</span>
         </div>
@@ -1052,15 +1196,6 @@
     <p>Translate where your team already works.</p>
 
     <div class="grid">
-
-      <div class="card soon">
-        <div class="card-top">
-          <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
-          <h3>Slack Bot</h3>
-          <span class="badge">Coming Soon</span>
-        </div>
-        <p class="desc">Translate messages and content right inside Slack with a slash command.</p>
-      </div>
 
       <div class="card soon">
         <div class="card-top">

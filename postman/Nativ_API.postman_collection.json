@@ -1,0 +1,464 @@
+{
+	"info": {
+		"_postman_id": "nativ-api-collection",
+		"name": "Nativ Localization API",
+		"description": "Complete API collection for Nativ – AI-powered localization with translation memory, brand voice, and style guides.\n\nGet your API key at https://dashboard.usenativ.com → Settings → API Keys.\n\nDocs: https://api.usenativ.com/redoc",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"auth": {
+		"type": "apikey",
+		"apikey": [
+			{ "key": "key", "value": "X-API-Key", "type": "string" },
+			{ "key": "value", "value": "{{NATIV_API_KEY}}", "type": "string" },
+			{ "key": "in", "value": "header", "type": "string" }
+		]
+	},
+	"variable": [
+		{ "key": "baseUrl", "value": "https://api.usenativ.com", "type": "string" },
+		{ "key": "NATIV_API_KEY", "value": "nativ_your_api_key_here", "type": "string" }
+	],
+	"item": [
+		{
+			"name": "Translation",
+			"description": "Translate text with cultural adaptation using your translation memory, brand voice, and style guides.",
+			"item": [
+				{
+					"name": "Translate text",
+					"request": {
+						"method": "POST",
+						"header": [{ "key": "Content-Type", "value": "application/json" }],
+						"url": { "raw": "{{baseUrl}}/text/culturalize", "host": ["{{baseUrl}}"], "path": ["text", "culturalize"] },
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"text\": \"Hello world\",\n  \"language\": \"French\",\n  \"source_language\": \"English\",\n  \"source_language_code\": \"en\",\n  \"tool\": \"api\",\n  \"include_tm_info\": true,\n  \"backtranslate\": false,\n  \"include_rationale\": true\n}",
+							"options": { "raw": { "language": "json" } }
+						},
+						"description": "Translate text with cultural adaptation. Uses TM, glossaries, brand voice, and style guides.\n\n**Parameters:**\n- `text` (required) – Text to translate\n- `language` (required) – Target language name (e.g. \"French\")\n- `language_code` – ISO code, auto-detected if omitted\n- `context` – Quality hint (e.g. \"mobile app button\")\n- `glossary` – Inline glossary\n- `formality` – very_informal | informal | neutral | formal | very_formal\n- `max_characters` – Strict character limit\n- `include_tm_info` – Return TM match details\n- `backtranslate` – Back-translation for QA\n- `include_rationale` – AI reasoning"
+					}
+				},
+				{
+					"name": "Translate text (all options)",
+					"request": {
+						"method": "POST",
+						"header": [{ "key": "Content-Type", "value": "application/json" }],
+						"url": { "raw": "{{baseUrl}}/text/culturalize", "host": ["{{baseUrl}}"], "path": ["text", "culturalize"] },
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"text\": \"Sign up for your free trial today!\",\n  \"language\": \"German\",\n  \"language_code\": \"de\",\n  \"source_language\": \"English\",\n  \"source_language_code\": \"en\",\n  \"context\": \"SaaS landing page hero CTA button\",\n  \"formality\": \"formal\",\n  \"glossary\": \"free trial=kostenlose Testversion\",\n  \"max_characters\": 50,\n  \"tool\": \"api\",\n  \"include_tm_info\": true,\n  \"backtranslate\": true,\n  \"include_rationale\": true\n}",
+							"options": { "raw": { "language": "json" } }
+						},
+						"description": "Full-featured translation with formality, glossary, character limit, back-translation, and rationale."
+					}
+				}
+			]
+		},
+		{
+			"name": "OCR (Text Extraction)",
+			"description": "Extract text from images using AI-powered OCR.",
+			"item": [
+				{
+					"name": "Extract text from image",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": { "raw": "{{baseUrl}}/text/extract", "host": ["{{baseUrl}}"], "path": ["text", "extract"] },
+						"body": {
+							"mode": "formdata",
+							"formdata": [{ "key": "file", "type": "file", "description": "Image file (JPEG, PNG, or WebP)" }]
+						},
+						"description": "Extract all visible text from an image using AI-powered OCR. Supports JPEG, PNG, and WebP."
+					}
+				}
+			]
+		},
+		{
+			"name": "Image",
+			"description": "Generate localized images and check cultural sensitivity.",
+			"item": [
+				{
+					"name": "Culturalize image",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": { "raw": "{{baseUrl}}/image/culturalize", "host": ["{{baseUrl}}"], "path": ["image", "culturalize"] },
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{ "key": "file", "type": "file", "description": "Reference image (JPEG, PNG, or WebP)" },
+								{ "key": "text", "value": "Bonjour le monde", "type": "text", "description": "Text to render (max 200 chars)" },
+								{ "key": "language_code", "value": "fr", "type": "text", "description": "Language code" },
+								{ "key": "output_format", "value": "png", "type": "text", "description": "png | jpeg | webp" },
+								{ "key": "model", "value": "gpt", "type": "text", "description": "gpt | gemini" },
+								{ "key": "num_images", "value": "1", "type": "text", "description": "Variants (1-5)" },
+								{ "key": "tool", "value": "api", "type": "text" }
+							]
+						},
+						"description": "Upload a reference image + text. Generates a new image with the text rendered in the same visual style. Returns base64-encoded image(s)."
+					}
+				},
+				{
+					"name": "Inspect image (cultural sensitivity)",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": { "raw": "{{baseUrl}}/image/inspect", "host": ["{{baseUrl}}"], "path": ["image", "inspect"] },
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{ "key": "file", "type": "file", "description": "Image to analyze (JPEG, PNG, or WebP)" },
+								{ "key": "countries", "value": "Japan,Brazil,Germany", "type": "text", "description": "Comma-separated countries (defaults to top 30 by GDP)" }
+							]
+						},
+						"description": "Analyze an image for cultural sensitivity issues. Returns SAFE/NOT SAFE verdict with per-country details."
+					}
+				}
+			]
+		},
+		{
+			"name": "Translation Memory",
+			"description": "Search, list, add, update, and delete translation memory entries.",
+			"item": [
+				{
+					"name": "Fuzzy search TM",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/master-tm/fuzzy-search?query=Hello&source_lang=en&limit=10&score_cutoff=0",
+							"host": ["{{baseUrl}}"], "path": ["master-tm", "fuzzy-search"],
+							"query": [
+								{ "key": "query", "value": "Hello", "description": "Text to search for" },
+								{ "key": "source_lang", "value": "en", "description": "Source language code" },
+								{ "key": "target_lang", "value": "", "description": "Target language code (optional)", "disabled": true },
+								{ "key": "limit", "value": "10", "description": "Max results" },
+								{ "key": "score_cutoff", "value": "0", "description": "Min match score (0-100)" }
+							]
+						},
+						"description": "Fuzzy-search the translation memory. Returns matches sorted by score."
+					}
+				},
+				{
+					"name": "List TM entries",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/master-tm/entries?limit=100&offset=0",
+							"host": ["{{baseUrl}}"], "path": ["master-tm", "entries"],
+							"query": [
+								{ "key": "limit", "value": "100", "description": "Results per page" },
+								{ "key": "offset", "value": "0", "description": "Pagination offset" },
+								{ "key": "source_lang", "value": "en", "description": "Filter by source language", "disabled": true },
+								{ "key": "target_lang", "value": "fr", "description": "Filter by target language", "disabled": true },
+								{ "key": "information_source", "value": "manual", "description": "Filter by source type", "disabled": true },
+								{ "key": "search", "value": "", "description": "Text search", "disabled": true },
+								{ "key": "enabled_only", "value": "true", "description": "Only enabled entries", "disabled": true }
+							]
+						},
+						"description": "List TM entries with optional filters for language, source type, and text search."
+					}
+				},
+				{
+					"name": "Add TM entry",
+					"request": {
+						"method": "POST",
+						"header": [{ "key": "Content-Type", "value": "application/json" }],
+						"url": { "raw": "{{baseUrl}}/master-tm/entries", "host": ["{{baseUrl}}"], "path": ["master-tm", "entries"] },
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"source_text\": \"Hello\",\n  \"target_text\": \"Bonjour\",\n  \"source_language_code\": \"en\",\n  \"target_language_code\": \"fr\",\n  \"information_source\": \"manual\",\n  \"source_name\": \"Postman import\"\n}",
+							"options": { "raw": { "language": "json" } }
+						},
+						"description": "Add a new translation memory entry."
+					}
+				},
+				{
+					"name": "Update TM entry",
+					"request": {
+						"method": "PATCH",
+						"header": [{ "key": "Content-Type", "value": "application/json" }],
+						"url": {
+							"raw": "{{baseUrl}}/master-tm/entries/:entry_id",
+							"host": ["{{baseUrl}}"], "path": ["master-tm", "entries", ":entry_id"],
+							"variable": [{ "key": "entry_id", "value": "your-entry-id", "description": "TM entry ID" }]
+						},
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"target_text\": \"Updated translation\",\n  \"enabled\": true\n}",
+							"options": { "raw": { "language": "json" } }
+						},
+						"description": "Update a TM entry's target text or enabled status."
+					}
+				},
+				{
+					"name": "Delete TM entry",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/master-tm/entries/:entry_id",
+							"host": ["{{baseUrl}}"], "path": ["master-tm", "entries", ":entry_id"],
+							"variable": [{ "key": "entry_id", "value": "your-entry-id", "description": "TM entry ID" }]
+						},
+						"description": "Delete a translation memory entry."
+					}
+				},
+				{
+					"name": "Get TM stats",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": { "raw": "{{baseUrl}}/master-tm/stats", "host": ["{{baseUrl}}"], "path": ["master-tm", "stats"] },
+						"description": "TM statistics: total entries, enabled/disabled counts, breakdown by source."
+					}
+				},
+				{
+					"name": "Bulk upload TM entries",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": { "raw": "{{baseUrl}}/master-tm/bulk-upload", "host": ["{{baseUrl}}"], "path": ["master-tm", "bulk-upload"] },
+						"body": {
+							"mode": "formdata",
+							"formdata": [{ "key": "file", "type": "file", "description": "CSV or TMX file" }]
+						},
+						"description": "Bulk upload TM entries from a CSV or TMX file."
+					}
+				},
+				{
+					"name": "Bulk delete TM entries",
+					"request": {
+						"method": "POST",
+						"header": [{ "key": "Content-Type", "value": "application/json" }],
+						"url": { "raw": "{{baseUrl}}/master-tm/bulk-delete", "host": ["{{baseUrl}}"], "path": ["master-tm", "bulk-delete"] },
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"entry_ids\": [\"id-1\", \"id-2\"]\n}",
+							"options": { "raw": { "language": "json" } }
+						},
+						"description": "Delete multiple TM entries at once."
+					}
+				},
+				{
+					"name": "Get TM languages",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": { "raw": "{{baseUrl}}/master-tm/languages", "host": ["{{baseUrl}}"], "path": ["master-tm", "languages"] },
+						"description": "Get all languages with TM entries."
+					}
+				},
+				{
+					"name": "Get TM sources",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": { "raw": "{{baseUrl}}/master-tm/sources", "host": ["{{baseUrl}}"], "path": ["master-tm", "sources"] },
+						"description": "Get all information source types in the TM."
+					}
+				}
+			]
+		},
+		{
+			"name": "Style Guides",
+			"description": "Manage style guides that shape translation tone and style.",
+			"item": [
+				{
+					"name": "List style guides",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": { "raw": "{{baseUrl}}/style-guide", "host": ["{{baseUrl}}"], "path": ["style-guide"] },
+						"description": "Get all style guides for your workspace."
+					}
+				},
+				{
+					"name": "Create style guide",
+					"request": {
+						"method": "POST",
+						"header": [{ "key": "Content-Type", "value": "application/json" }],
+						"url": { "raw": "{{baseUrl}}/style-guide", "host": ["{{baseUrl}}"], "path": ["style-guide"] },
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"title\": \"Brand Tone\",\n  \"content\": \"Use a friendly, conversational tone. Avoid jargon. Prefer active voice.\",\n  \"is_enabled\": true\n}",
+							"options": { "raw": { "language": "json" } }
+						},
+						"description": "Create a new style guide."
+					}
+				},
+				{
+					"name": "Update style guide",
+					"request": {
+						"method": "PUT",
+						"header": [{ "key": "Content-Type", "value": "application/json" }],
+						"url": {
+							"raw": "{{baseUrl}}/style-guide/:guide_id",
+							"host": ["{{baseUrl}}"], "path": ["style-guide", ":guide_id"],
+							"variable": [{ "key": "guide_id", "value": "your-guide-id", "description": "Style guide ID" }]
+						},
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"title\": \"Updated Brand Tone\",\n  \"content\": \"Updated content.\",\n  \"is_enabled\": true\n}",
+							"options": { "raw": { "language": "json" } }
+						},
+						"description": "Update an existing style guide."
+					}
+				},
+				{
+					"name": "Delete style guide",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/style-guide/:guide_id",
+							"host": ["{{baseUrl}}"], "path": ["style-guide", ":guide_id"],
+							"variable": [{ "key": "guide_id", "value": "your-guide-id", "description": "Style guide ID" }]
+						},
+						"description": "Delete a style guide."
+					}
+				}
+			]
+		},
+		{
+			"name": "Brand Voice",
+			"description": "Access your brand voice prompt – the master prompt shaping all translations.",
+			"item": [
+				{
+					"name": "Get brand voice prompt",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": { "raw": "{{baseUrl}}/style-guide/prompt", "host": ["{{baseUrl}}"], "path": ["style-guide", "prompt"] },
+						"description": "Get the brand voice prompt."
+					}
+				},
+				{
+					"name": "Get combined prompt",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": { "raw": "{{baseUrl}}/style-guide/combined", "host": ["{{baseUrl}}"], "path": ["style-guide", "combined"] },
+						"description": "Get the combined prompt (brand voice + all enabled style guides)."
+					}
+				}
+			]
+		},
+		{
+			"name": "Languages",
+			"description": "Manage language settings, formality, and custom style directives.",
+			"item": [
+				{
+					"name": "Get languages",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": { "raw": "{{baseUrl}}/user/languages", "host": ["{{baseUrl}}"], "path": ["user", "languages"] },
+						"description": "Get all configured languages with formality and custom style settings."
+					}
+				},
+				{
+					"name": "Update language formality",
+					"request": {
+						"method": "PATCH",
+						"header": [{ "key": "Content-Type", "value": "application/json" }],
+						"url": {
+							"raw": "{{baseUrl}}/user/languages/:mapping_id/formality",
+							"host": ["{{baseUrl}}"], "path": ["user", "languages", ":mapping_id", "formality"],
+							"variable": [{ "key": "mapping_id", "value": "1", "description": "Language mapping ID" }]
+						},
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"formality\": \"formal\"\n}",
+							"options": { "raw": { "language": "json" } }
+						},
+						"description": "Set default formality: very_informal | informal | neutral | formal | very_formal"
+					}
+				},
+				{
+					"name": "Update language custom style",
+					"request": {
+						"method": "PATCH",
+						"header": [{ "key": "Content-Type", "value": "application/json" }],
+						"url": {
+							"raw": "{{baseUrl}}/user/languages/:mapping_id/custom-style",
+							"host": ["{{baseUrl}}"], "path": ["user", "languages", ":mapping_id", "custom-style"],
+							"variable": [{ "key": "mapping_id", "value": "1", "description": "Language mapping ID" }]
+						},
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"custom_style\": \"Always use Sie (formal you). Prefer compound nouns.\"\n}",
+							"options": { "raw": { "language": "json" } }
+						},
+						"description": "Set a custom style directive for a specific language."
+					}
+				},
+				{
+					"name": "Get formality options",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": { "raw": "{{baseUrl}}/user/languages/formality-options", "host": ["{{baseUrl}}"], "path": ["user", "languages", "formality-options"] },
+						"description": "Get available formality levels."
+					}
+				}
+			]
+		},
+		{
+			"name": "Feedback",
+			"description": "Submit translation feedback to improve the model.",
+			"item": [
+				{
+					"name": "Submit feedback",
+					"request": {
+						"method": "POST",
+						"header": [{ "key": "Content-Type", "value": "application/json" }],
+						"url": { "raw": "{{baseUrl}}/text/feedback", "host": ["{{baseUrl}}"], "path": ["text", "feedback"] },
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"source\": \"Hello world\",\n  \"result\": \"Bonjour le monde\",\n  \"language\": \"French\",\n  \"feedback\": \"Should be more casual: 'Salut tout le monde'\",\n  \"approved\": false\n}",
+							"options": { "raw": { "language": "json" } }
+						},
+						"description": "Submit feedback on a translation. The model learns from corrections."
+					}
+				},
+				{
+					"name": "List feedback",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": { "raw": "{{baseUrl}}/text/feedback", "host": ["{{baseUrl}}"], "path": ["text", "feedback"] },
+						"description": "Get all submitted translation feedback."
+					}
+				}
+			]
+		},
+		{
+			"name": "API Keys",
+			"description": "Manage API keys for programmatic access.",
+			"item": [
+				{
+					"name": "List API keys",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": { "raw": "{{baseUrl}}/api-keys", "host": ["{{baseUrl}}"], "path": ["api-keys"] },
+						"description": "List all API keys for the current user."
+					}
+				},
+				{
+					"name": "Revoke API key",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api-keys/:key_id",
+							"host": ["{{baseUrl}}"], "path": ["api-keys", ":key_id"],
+							"variable": [{ "key": "key_id", "value": "your-key-id", "description": "API key ID" }]
+						},
+						"description": "Revoke an API key. Irreversible."
+					}
+				}
+			]
+		}
+	]
+}

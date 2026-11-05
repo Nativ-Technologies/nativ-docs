@@ -2,6 +2,18 @@
 
 Public-facing documentation, setup guides, and embeddable assets for [Nativ](https://usenativ.com) integrations.
 
+## Start with the workflow
+
+- [Current product and installation catalogue](https://www.usenativ.com/integrations/): distinguish published plugins, available developer interfaces, dashboard connections and early access.
+- [Build with Nativ](https://www.usenativ.com/integrations/build/): Python/TypeScript quickstarts and custom-plugin architecture.
+- [MCP setup](https://www.usenativ.com/integrations/mcp/): local/hosted setup, tool workflows and media inputs.
+- [Full MCP capability mapping](https://github.com/Nativ-Technologies/nativ-mcp/blob/main/docs/capabilities.md): exact text, image, audio, subtitle and workspace operations.
+- [Existing public custom GPT](https://chatgpt.com/g/g-69979fd5b5a48191aec8c254b15014e4-nativ-ai-localization): conversational text localisation, distinct from the full MCP server.
+
+The setup files below include historical publisher examples. They are not a
+universal capability, pricing or authentication contract. Use current public
+schemas and the relevant SDK version when implementing a connector.
+
 ## Contents
 
 | Directory | Description |
@@ -22,8 +34,20 @@ Public-facing documentation, setup guides, and embeddable assets for [Nativ](htt
 
 ## Getting Started
 
-All integrations authenticate with a Nativ API key (`nativ_xxx...`).  
-Get one at **[dashboard.usenativ.com](https://dashboard.usenativ.com) → Settings → API Keys**.
+Authentication depends on the interface:
+
+| Interface | Connection |
+| --- | --- |
+| Full MCP, JSON tools and SDK/API integrations | Nativ API key; keep application keys on your server |
+| Focused `/chatgpt/mcp` endpoint | OAuth sign-in; seven focused tools, distinct from full MCP’s 51 |
+| Existing custom GPT | Its own GPT Actions account connection |
+| Dashboard and creative plugins | The account/host sign-in described by that integration |
+
+Create API keys at **[dashboard.usenativ.com](https://dashboard.usenativ.com) →
+Settings → API Keys**. Never put real keys in committed examples or chat
+messages. A reachable OAuth endpoint does not establish public plugin-directory
+approval. Generation can use the connected Nativ account’s credits; check
+current workspace usage rather than relying on old fixed-price examples.
 
 ## License
 

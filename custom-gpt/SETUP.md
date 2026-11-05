@@ -1,8 +1,10 @@
 # Publishing the Nativ Custom GPT
 
+> **Historical GPT Actions publisher runbook.** This describes the legacy custom-GPT setup, not the 51-tool MCP server or the separate seven-tool OAuth MCP endpoint. For current connection choices, start with the [MCP guide](https://www.usenativ.com/integrations/mcp/) and [public custom-GPT workflow](https://www.usenativ.com/blog/chatgpt-localisation-workflow/). Revalidate account access, schemas, callback requirements and usage before a deployment.
+
 ## Prerequisites
 
-- An OpenAI account with GPT creation access (ChatGPT Plus, Team, or Enterprise)
+- An OpenAI account with access to the GPT editor, subject to current account/workspace permissions
 - A Nativ API key for testing (`nativ_xxx...` from dashboard.usenativ.com)
 
 ## Understanding the auth model
@@ -158,7 +160,7 @@ If you see a red error banner, check that the YAML is valid (no tab characters, 
 #### 5c. Set privacy policy
 
 At the bottom of the Actions section:
-- **Privacy policy URL**: `https://usenativ.com/privacy`
+- **Privacy policy URL**: `https://www.usenativ.com/legal/privacy-policy/`
 
 ### 6. Test the action
 
@@ -186,7 +188,7 @@ In the preview chat, try these tests:
   6. If `OAUTH_CLIENT_SECRET` is not set in Cloud Run at all, the backend will reject all OAuth requests.
 - **OAuth "nothing happens" on authorize**: Check the backend logs for the POST /oauth/authorize request. Common causes: Supabase auth service is down, or the user's email doesn't have a matching row in the `users` table (they need to have signed up at dashboard.usenativ.com first).
 - **402 error**: Your test account has no credits. Add credits at dashboard.usenativ.com.
-- **Timeout**: Translation should complete in <10 seconds. If it times out, check your API server.
+- **Timeout**: No fixed completion time is guaranteed here. Inspect the client timeout, request status and any completed work before retrying.
 - **GPT doesn't call the action**: The Instructions or schema descriptions may be unclear. Make sure the schema is pasted correctly.
 
 ### 7. Upload a profile image (optional)
@@ -221,23 +223,24 @@ https://chatgpt.com/g/g-XXXXXXXXX-nativ-ai-localization
 
 ## Cost control (API Key auth)
 
-Since API Key auth means you pay for everyone, consider these safeguards:
+A creator-configured API key charges the connected Nativ account for requests
+made through that configuration. Use a dedicated key for attribution where
+appropriate, but do not assume it has a separate credit balance, enforced
+per-key cap or automatic budget alert. Verify the controls actually available
+in the workspace and monitor its usage.
 
-1. **Dedicated key with credit cap** — Create a separate API key with a limited credit balance. When it runs out, the GPT returns 402 errors instead of draining your main account.
-2. **Rate limiting** — Your API already has rate limiting via slowapi. Consider tighter limits for the GPT's API key.
-3. **Monitor usage** — Track API calls from the GPT's key in your dashboard to understand cost.
-4. **Budget threshold** — Set up alerts when the GPT key's credit usage exceeds a threshold.
-
-For anything beyond testing/demos, implement OAuth 2.0 so users pay with their own accounts.
+A production integration should use the appropriate per-user account
+connection. Revalidate the legacy OAuth setup above before relying on it; the
+focused OAuth MCP connection is a separate contract.
 
 ---
 
 ## Notes
 
-- Each translation costs 100 credits (~$0.10) from the account tied to the API key
+- Usage and credit requirements depend on the current operation and connected account. Check the dashboard before running a request; this historical example does not establish a fixed per-translation price.
 - The GPT doesn't access TM/glossary lists directly — the server applies them automatically per user
 - Users manage their TM, glossaries, style guides, and team settings at dashboard.usenativ.com
-- The OpenAPI spec exposes 4 endpoints (text translation, OCR, styled image generation, cultural sensitivity). Image endpoints use multipart/form-data — users can upload images directly in ChatGPT and the GPT will pass them to the API
+- The OpenAPI spec exposes 4 endpoints (text translation, OCR, styled image generation, cultural sensitivity). The legacy REST image endpoints use multipart/form-data. Their existence does not establish that a ChatGPT client can hand a private attachment to them. The current JSON tools/focused MCP image paths require accessible HTTPS image URLs; do not promise automatic attachment handoff.
 - The full Nativ API has many more endpoints, but these 4 are the most useful for ChatGPT users
 
 ## Updating the GPT
